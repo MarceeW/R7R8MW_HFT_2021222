@@ -11,17 +11,13 @@ namespace R7R8MW_HFT_2021222.Models
     public class RentEvent
     {
         [Key]
-<<<<<<< HEAD
-=======
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
->>>>>>> 5960e19a33686b3e97a36b6e8f09eceec5655c59
         public int RentEventId { get; set; }
         [Required]
         public DateTime RentDate { get; set; }
         [Required]
         public double Duration { get; set; }
 
-<<<<<<< HEAD
         [ForeignKey(nameof(Car))]
         public int? CarId { get; set; }
 
@@ -38,10 +34,5 @@ namespace R7R8MW_HFT_2021222.Models
             Duration = int.Parse(splitted[2]);
             CarId = int.Parse(splitted[3]);
         }
-=======
-        public int? CarId { get; set; }
-
-        public virtual Car Car { get; private set; }
->>>>>>> 5960e19a33686b3e97a36b6e8f09eceec5655c59
     }
 }

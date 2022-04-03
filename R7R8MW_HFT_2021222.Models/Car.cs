@@ -13,7 +13,6 @@ namespace R7R8MW_HFT_2021222.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CarId { get; set; }
-<<<<<<< HEAD
 
         [ForeignKey(nameof(Brand))]
         public int? BrandId { get; set; }
@@ -30,14 +29,5 @@ namespace R7R8MW_HFT_2021222.Models
             CarId = int.Parse(splitted[0]);
             BrandId = int.Parse(splitted[2]);
         }
-=======
-        public string CarName { get; set; }
-
-        public int? BrandId { get; set; }
-        public int? RentEventId { get; set; }
-
-        public virtual Brand Brand { get; private set; }
-        public virtual RentEvent RentEvent { get; private set; }
->>>>>>> 5960e19a33686b3e97a36b6e8f09eceec5655c59
     }
 }
