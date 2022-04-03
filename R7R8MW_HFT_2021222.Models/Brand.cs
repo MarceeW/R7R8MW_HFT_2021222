@@ -16,9 +16,20 @@ namespace R7R8MW_HFT_2021222.Models
         [Required]
         [StringLength(100)]
         public string BrandName { get; set; }
-        [Required]
-        public int Price { get; set; }
 
+        [Required]
+        public int? Price { get; set; }
         public virtual ICollection<Car> Cars { get; set; }
+        public Brand()
+        {
+
+        }
+        public Brand(string data)
+        {
+            string[] splitted = data.Split('#');
+            BrandId=int.Parse(splitted[0]);
+            BrandName=splitted[1];
+            Price = int.Parse(splitted[2]);
+        }
     }
 }

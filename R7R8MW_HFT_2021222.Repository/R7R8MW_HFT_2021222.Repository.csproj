@@ -5,7 +5,32 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\R7R8MW_HFT_2021222.Models\R7R8MW_HFT_2021222.Models.csproj" />
+    <None Remove="Car.mdf" />
+    <None Remove="Car_log.ldf" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Car.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Car_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.15" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.15" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.15" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.15" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.15">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\R7R8MW_HFT_2021222.Models\R7R8MW_HFT_2021222.Models.csproj" />
+	</ItemGroup>
 
 </Project>
