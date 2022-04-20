@@ -12,11 +12,11 @@ namespace R7R8MW_HFT_2021222.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ActorId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(240)]
-        public string ActorName { get; set; }
+        public string Name { get; set; }
 
         public virtual ICollection<Movie> Movies { get; set; }
         public virtual ICollection<Role> Roles { get; set; }
@@ -28,8 +28,8 @@ namespace R7R8MW_HFT_2021222.Models
         public Actor(string seed)
         {
             string[] split = seed.Split('#');
-            ActorId = int.Parse(split[0]);
-            ActorName = split[1];
+            Id = int.Parse(split[0]);
+            Name = split[1];
         }
     }
 }

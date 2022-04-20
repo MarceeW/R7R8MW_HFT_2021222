@@ -12,11 +12,11 @@ namespace R7R8MW_HFT_2021222.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int DirectorId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(240)]
-        public string DirectorName { get; set; }
+        public string Name { get; set; }
 
         public virtual ICollection<Movie> Movies { get; set; }
 
@@ -28,8 +28,8 @@ namespace R7R8MW_HFT_2021222.Models
         public Director(string seed)
         {
             string[] split = seed.Split('#');
-            DirectorId = int.Parse(split[0]);
-            DirectorName = split[1];
+            Id = int.Parse(split[0]);
+            Name = split[1];
             Movies = new HashSet<Movie>();
         }
     }

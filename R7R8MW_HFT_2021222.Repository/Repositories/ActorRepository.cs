@@ -15,12 +15,12 @@ namespace R7R8MW_HFT_2021222.Repository
 
         public override Actor Read(int id)
         {
-            return ctx.Actors.FirstOrDefault(x => x.ActorId == id);
+            return ctx.Actors.FirstOrDefault(x => x.Id == id);
         }
 
         public override void Update(Actor item)
         {
-            var old = Read(item.ActorId);
+            var old = Read(item.Id);
             foreach (var prop in old.GetType().GetProperties())
             {
                 prop.SetValue(old, prop.GetValue(item));

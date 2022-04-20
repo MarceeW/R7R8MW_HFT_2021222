@@ -15,12 +15,12 @@ namespace R7R8MW_HFT_2021222.Repository
 
         public override Director Read(int id)
         {
-            return ctx.Directors.FirstOrDefault(x => x.DirectorId == id);
+            return ctx.Directors.FirstOrDefault(x => x.Id == id);
         }
 
         public override void Update(Director item)
         {
-            var old = Read(item.DirectorId);
+            var old = Read(item.Id);
             foreach (var prop in old.GetType().GetProperties())
             {
                 prop.SetValue(old, prop.GetValue(item));
