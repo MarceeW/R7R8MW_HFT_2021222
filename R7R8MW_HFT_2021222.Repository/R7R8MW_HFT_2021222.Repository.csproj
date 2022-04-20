@@ -4,20 +4,6 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Car.mdf" />
-    <None Remove="Car_log.ldf" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Car.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Car_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.15" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.15" />

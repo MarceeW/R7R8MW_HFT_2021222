@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace R7R8MW_HFT_2021222.Repository
 {
-    public abstract class Repository<T> where T : class
+    public abstract class Repository<T> : IRepository<T> where T : class
     {
-        protected CarDbContext ctx { get; set; }
-        public Repository(CarDbContext ctx)
+        protected MovieDbContext ctx { get; set; }
+        public Repository(MovieDbContext ctx)
         {
             this.ctx = ctx;
         }
