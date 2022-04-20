@@ -10,5 +10,8 @@ namespace R7R8MW_HFT_2021222.Logic
         IPerson Read(int id, bool isActor);
         IQueryable<IPerson> ReadAll(bool readActors);
         void Update(IPerson entity);
+        public Director MostSuccesfulDirector(IMovieLogic logic);
+        public Director DirectorWithMostFilms();
+        public Actor MostCommonActor();
     }
 }
