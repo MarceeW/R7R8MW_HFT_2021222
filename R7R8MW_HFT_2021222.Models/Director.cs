@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace R7R8MW_HFT_2021222.Models
 {
-    public class Director
+    public class Director : IPerson
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

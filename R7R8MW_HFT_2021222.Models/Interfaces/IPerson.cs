@@ -10,5 +10,7 @@ namespace R7R8MW_HFT_2021222.Models
     {
         public string Name { get; set; }
         public string Id { get; set; }
+
+        public ICollection<Movie> Movies;
     }
 }

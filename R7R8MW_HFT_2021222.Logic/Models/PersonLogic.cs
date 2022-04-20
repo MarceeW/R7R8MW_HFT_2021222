@@ -8,31 +8,67 @@ using System.Threading.Tasks;
 
 namespace R7R8MW_HFT_2021222.Logic
 {
-    public class PersonLogic
+    public class PersonLogic : IPersonLogic
     {
-        public void Create(Actor entity)
+        IRepository<Actor> actorRep;
+        IRepository<Director> directorRep;
+
+        public PersonLogic(IRepository<Actor> actorRep, IRepository<Director> directorRep)
         {
-            throw new NotImplementedException();
+            this.actorRep = actorRep;
+            this.directorRep = directorRep;
         }
 
-        public void Delete(int id)
+        public void Create(IPerson entity)
         {
-            throw new NotImplementedException();
+            if (entity == null)
+                throw new ArgumentNullException();
+
+            if (entity is Actor)
+                actorRep.Create(entity as Actor);
+            else if (entity is Director)
+                directorRep.Create(entity as Director);
         }
 
-        public Actor Read(int id)
+        public void Delete(int id, bool isActor)
         {
-            throw new NotImplementedException();
+            if (id < 0)
+                throw new KeyNotFoundException();
+
+            if (isActor)
+                actorRep.Delete(id);
+            else
+                directorRep.Delete(id);
         }
 
-        public IQueryable<Actor> ReadAll()
+        public IPerson Read(int id, bool isActor)
         {
-            throw new NotImplementedException();
+            if (id < 0)
+                throw new KeyNotFoundException();
+
+            if (isActor)
+                return actorRep.Read(id);
+            else
+                return directorRep.Read(id);
         }
 
-        public void Update(Actor entity)
+        public IQueryable<IPerson> ReadAll(bool readActors)
         {
-            throw new NotImplementedException();
+            if (readActors)
+                return actorRep.ReadAll();
+            else
+                return directorRep.ReadAll();
+        }
+
+        public void Update(IPerson entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException();
+
+            if (entity is Actor)
+                actorRep.Update(entity as Actor);
+            else if (entity is Director)
+                directorRep.Update(entity as Director);
         }
     }
 }
