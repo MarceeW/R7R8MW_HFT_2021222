@@ -24,7 +24,6 @@ namespace R7R8MW_HFT_2021222.Models
         public virtual Movie Movie { get; private set; }
         public Role()
         {
-
         }
 
         public Role(string seed)

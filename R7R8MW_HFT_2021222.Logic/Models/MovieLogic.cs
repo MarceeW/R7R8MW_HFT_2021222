@@ -10,9 +10,9 @@ namespace R7R8MW_HFT_2021222.Logic
 {
     public class MovieLogic : IMovieLogic
     {
-        MovieRepository repository;
+        IRepository<Movie> repository;
 
-        public MovieLogic(MovieRepository repository)
+        public MovieLogic(IRepository<Movie> repository)
         {
             this.repository = repository;
         }

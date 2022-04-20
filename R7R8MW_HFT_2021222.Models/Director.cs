@@ -21,8 +21,7 @@ namespace R7R8MW_HFT_2021222.Models
         public virtual ICollection<Movie> Movies { get; set; }
 
         public Director()
-        {
-            
+        {   
         }
 
         public Director(string seed)
