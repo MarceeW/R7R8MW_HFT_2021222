@@ -17,7 +17,10 @@ namespace R7R8MW_HFT_2021222.Logic
         }
         public void Create(Role entity)
         {
-            throw new NotImplementedException();
+            if (entity == null)
+                throw new ArgumentNullException();
+
+            roleRepository.Create(entity);
         }
 
         public void Delete(int id)

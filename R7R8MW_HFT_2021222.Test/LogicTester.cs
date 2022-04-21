@@ -69,5 +69,26 @@ namespace R7R8MW_HFT_2021222.Test
             fakeRoleRepository.Setup(r => r.ReadAll()).Returns(roles);
             roleLogic = new RoleLogic(fakeRoleRepository.Object);
         }
+        [Test]
+        public void PersonCreationTestWithNullValue()
+        {
+            IPerson testPerson = null;
+
+            Assert.That(()=>personLogic.Create(testPerson),Throws.TypeOf<ArgumentNullException>());
+        }
+        [Test]
+        public void RoleCreationTestWithNullValue()
+        {
+            Role testRole = null;
+
+            Assert.That(() => roleLogic.Create(testRole), Throws.TypeOf<ArgumentNullException>());
+        }
+        [Test]
+        public void MovieCreationTestWithNullValue()
+        {
+            Movie testMovie = null;
+
+            Assert.That(() => movieLogic.Create(testMovie), Throws.TypeOf<ArgumentNullException>());
+        }
     }
 }
