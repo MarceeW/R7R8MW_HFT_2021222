@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace R7R8MW_HFT_2021222.Models
@@ -29,6 +30,7 @@ namespace R7R8MW_HFT_2021222.Models
 
         public virtual Director Director { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Actor> Actors { get; set; }
 
         public virtual ICollection<Role> Roles { get; set; }

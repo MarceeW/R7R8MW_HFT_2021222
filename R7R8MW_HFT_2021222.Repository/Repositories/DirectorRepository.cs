@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace R7R8MW_HFT_2021222.Repository
 {
-    internal class DirectorRepository : Repository<Director>, IRepository<Director>
+    public class DirectorRepository : Repository<Director>, IRepository<Director>
     {
         public DirectorRepository(MovieDbContext ctx) : base(ctx)
         {
