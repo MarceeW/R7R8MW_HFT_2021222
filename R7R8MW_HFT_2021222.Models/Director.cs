@@ -31,5 +31,14 @@ namespace R7R8MW_HFT_2021222.Models
             Name = split[1];
             Movies = new HashSet<Movie>();
         }
+        public override bool Equals(object obj)
+        {
+            Director other = obj as Director;
+            return Id == other.Id && Name == other.Name;
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

@@ -58,37 +58,89 @@ namespace R7R8MW_HFT_2021222.Test
 
             var roles = new List<Role>()
             {
-                new Role("1#1#1#RoleOne"),
-                new Role("2#1#2#RoleTwo"),
-                new Role("3#2#1#RoleThree"),
-                new Role("4#2#2#RoleFour"),
-                new Role("5#3#1#RoleFive"),
-                new Role("6#3#2#RoleSix"),
+                new Role("1#1#1#1#IronMan"),
+                new Role("2#1#2#2#RoleTwo"),
+                new Role("3#2#1#3#RoleThree"),
+                new Role("4#2#2#4#IronMan"),
+                new Role("5#3#1#5#RoleFive"),
+                new Role("6#4#3#6#RoleSix"),
             }.AsQueryable();
             fakeRoleRepository = new Mock<IRepository<Role>>();
             fakeRoleRepository.Setup(r => r.ReadAll()).Returns(roles);
             roleLogic = new RoleLogic(fakeRoleRepository.Object);
+
         }
         [Test]
-        public void PersonCreationTestWithNullValue()
+        public void PersonCreationTestWithNullValueTest()
         {
             IPerson testPerson = null;
 
             Assert.That(()=>personLogic.Create(testPerson),Throws.TypeOf<ArgumentNullException>());
         }
         [Test]
-        public void RoleCreationTestWithNullValue()
+        public void RoleCreationTestWithNullValueTest()
         {
             Role testRole = null;
 
             Assert.That(() => roleLogic.Create(testRole), Throws.TypeOf<ArgumentNullException>());
         }
         [Test]
-        public void MovieCreationTestWithNullValue()
+        public void MovieCreationTestWithNullValueTest()
         {
             Movie testMovie = null;
 
             Assert.That(() => movieLogic.Create(testMovie), Throws.TypeOf<ArgumentNullException>());
+        }
+        [Test]
+        public void OldestMovieTest()
+        {
+            var expected = new Movie("1#TestMovie 1#585,8#1#2008*05*02#7,9");
+
+            var result = movieLogic.Oldest();
+
+            Assert.AreEqual(expected, result);
+        }
+        [Test]
+        public void TopRatingMovieTest()
+        {
+            var expected = new Movie("1#TestMovie 1#585,8#1#2008*05*02#7,9");
+
+            var result= movieLogic.TopRating();
+
+            Assert.AreEqual(expected, result);
+        }
+        [Test]
+        public void DirectorWithMostFilmsTest()
+        {
+            var expected = new Director("1#Test One");
+
+            var result = personLogic.DirectorWithMostFilms();
+
+            Assert.AreEqual(expected, result);
+        }
+        [Test]
+        public void GetMostCommonRoleNameTest()
+        {
+            string expected = "IronMan";
+
+            string result = roleLogic.GetMostCommonRoleName();
+
+            Assert.AreEqual(expected, result);
+        }
+        [Test]
+        public void PersonLogicUpdateTestWithNullParameter()
+        {
+            Assert.That(() => personLogic.Update(null), Throws.TypeOf<ArgumentNullException>());
+        }
+        [Test]
+        public void MovieLogicUpdateTestWithNullParameter()
+        {
+            Assert.That(() => movieLogic.Update(null), Throws.TypeOf<ArgumentNullException>());
+        }
+        [Test]
+        public void RoleLogicUpdateTestWithNullParameter()
+        {
+            Assert.That(() => roleLogic.Update(null), Throws.TypeOf<ArgumentNullException>());
         }
     }
 }

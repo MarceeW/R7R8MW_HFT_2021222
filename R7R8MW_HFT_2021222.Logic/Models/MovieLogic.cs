@@ -56,7 +56,7 @@ namespace R7R8MW_HFT_2021222.Logic
         public Movie LargestIncome()
         {
             return (from x in repository.ReadAll()
-                    orderby x.Income
+                    orderby x.Income descending
                     select x).FirstOrDefault();
         }
         public Movie Oldest()

@@ -30,5 +30,14 @@ namespace R7R8MW_HFT_2021222.Models
             Id = int.Parse(split[0]);
             Name = split[1];
         }
+        public override bool Equals(object obj)
+        {
+            Director other = obj as Director;
+            return Id == other.Id && Name == other.Name;
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

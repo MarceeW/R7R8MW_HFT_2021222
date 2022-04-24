@@ -47,7 +47,7 @@ namespace R7R8MW_HFT_2021222.Logic
         public void Update(Role entity)
         {
             if (entity == null)
-                throw new NullReferenceException();
+                throw new ArgumentNullException();
 
             roleRepository.Update(entity);
         }
@@ -57,7 +57,6 @@ namespace R7R8MW_HFT_2021222.Logic
                     group x by x.RoleName into roles
                     orderby roles.Count() descending
                     select roles.Key).FirstOrDefault();
-
         }
     }
 }

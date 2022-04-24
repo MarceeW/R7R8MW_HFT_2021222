@@ -47,5 +47,14 @@ namespace R7R8MW_HFT_2021222.Models
             Release = DateTime.Parse(split[4].Replace('*', '.'));
             Rating = double.Parse(split[5]);
         }
+        public override bool Equals(object obj)
+        {
+            Movie other = obj as Movie;
+            return Id==other.Id && Title==other.Title;
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
