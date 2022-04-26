@@ -77,14 +77,20 @@ namespace R7R8MW_HFT_2021222.Logic
         public Director DirectorWithMostFilms()
         {
             return (from x in directorRep.ReadAll()
-                   orderby x.Movies.Count() descending
-                   select x).FirstOrDefault();
+                    orderby x.Movies.Count() descending
+                    select x).FirstOrDefault();
         }
         public Actor MostCommonActor()
         {
             return (from x in actorRep.ReadAll()
                     orderby x.Movies.Count() descending
                     select x).FirstOrDefault();
+        }
+        public IEnumerable<Actor> AllActorsFromAvengers()
+        {
+            return from x in actorRep.ReadAll()
+                   where x.Movies.Any(x => x.Title.ToLower().Contains("avengers"))
+                   select x;
         }
     }
 }

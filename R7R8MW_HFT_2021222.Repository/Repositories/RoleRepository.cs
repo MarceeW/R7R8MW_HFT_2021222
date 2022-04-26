@@ -23,7 +23,8 @@ namespace R7R8MW_HFT_2021222.Repository
             var old = Read(item.RoleId);
             foreach (var prop in old.GetType().GetProperties())
             {
-                prop.SetValue(old, prop.GetValue(item));
+                if (prop.GetAccessors().FirstOrDefault(x => x.IsVirtual) == null)
+                    prop.SetValue(old, prop.GetValue(item));
             }
             ctx.SaveChanges();
         }

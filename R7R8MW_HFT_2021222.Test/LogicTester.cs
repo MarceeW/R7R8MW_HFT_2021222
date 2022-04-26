@@ -71,11 +71,18 @@ namespace R7R8MW_HFT_2021222.Test
 
         }
         [Test]
-        public void PersonCreationTestWithNullValueTest()
+        public void ActorCreationTestWithNullValueTest()
         {
-            IPerson testPerson = null;
+            Actor testPerson = null;
 
             Assert.That(()=>personLogic.Create(testPerson),Throws.TypeOf<ArgumentNullException>());
+        }
+        [Test]
+        public void DirectorCreationTestWithNullValueTest()
+        {
+            Director testPerson = null;
+
+            Assert.That(() => personLogic.Create(testPerson), Throws.TypeOf<ArgumentNullException>());
         }
         [Test]
         public void RoleCreationTestWithNullValueTest()
