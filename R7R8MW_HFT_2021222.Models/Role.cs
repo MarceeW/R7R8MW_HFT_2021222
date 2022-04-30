@@ -20,7 +20,6 @@ namespace R7R8MW_HFT_2021222.Models
 
         public int MovieId { get; set; }
         public int ActorId { get; set; }
-
         public virtual Actor Actor { get; private set; }
         [JsonIgnore]
         public virtual Movie Movie { get; private set; }
@@ -39,8 +38,12 @@ namespace R7R8MW_HFT_2021222.Models
         }
         public override bool Equals(object obj)
         {
-            Role other = obj as Role;
-            return RoleId == other.RoleId && RoleName == other.RoleName;
+            if(obj is Role)
+            {
+                Role other = obj as Role;
+                return RoleId == other.RoleId && RoleName == other.RoleName;
+            }
+            return false;
         }
         public override int GetHashCode()
         {

@@ -101,7 +101,10 @@ namespace R7R8MW_HFT_2021222.Test
         [Test]
         public void OldestMovieTest()
         {
-            var expected = new Movie("1#TestMovie 1#585,8#1#2008*05*02#7,9");
+            var expected = new List<Movie>()
+            {
+                new Movie("1#TestMovie 1#585,8#1#2008*05*02#7,9")
+            };
 
             var result = movieLogic.Oldest();
 
@@ -110,27 +113,20 @@ namespace R7R8MW_HFT_2021222.Test
         [Test]
         public void TopRatingMovieTest()
         {
-            var expected = new Movie("1#TestMovie 1#585,8#1#2008*05*02#7,9");
-
+            var expected = new List<Movie>()
+            {
+                new Movie("1#TestMovie 1#585,8#1#2008*05*02#7,9")
+            };
             var result= movieLogic.TopRating();
-
-            Assert.AreEqual(expected, result);
-        }
-        [Test]
-        public void DirectorWithMostFilmsTest()
-        {
-            var expected = new Director("1#Test One");
-
-            var result = personLogic.DirectorWithMostFilms();
 
             Assert.AreEqual(expected, result);
         }
         [Test]
         public void GetMostCommonRoleNameTest()
         {
-            string expected = "IronMan";
+            var expected = new List<string>() {"IronMan"};
 
-            string result = roleLogic.GetMostCommonRoleName();
+            var result = roleLogic.GetMostCommonRoleName();
 
             Assert.AreEqual(expected, result);
         }

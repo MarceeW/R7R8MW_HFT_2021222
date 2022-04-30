@@ -11,9 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\R7R8MW_HFT_2021222.Logic\R7R8MW_HFT_2021222.Logic.csproj" />
     <ProjectReference Include="..\R7R8MW_HFT_2021222.Models\R7R8MW_HFT_2021222.Models.csproj" />
-    <ProjectReference Include="..\R7R8MW_HFT_2021222.Repository\R7R8MW_HFT_2021222.Repository.csproj" />
   </ItemGroup>
 
 </Project>

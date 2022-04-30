@@ -118,15 +118,14 @@ namespace R7R8MW_HFT_2021222.Client
 
         public void Delete(int id, string endpoint)
         {
-            HttpResponseMessage response =
-                client.DeleteAsync(endpoint + "/" + id.ToString()).GetAwaiter().GetResult();
-
+            HttpResponseMessage
+                response = client.DeleteAsync(endpoint + "/" + id.ToString()).GetAwaiter().GetResult();
+            
             if (!response.IsSuccessStatusCode)
             {
                 var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
                 throw new ArgumentException(error.Msg);
             }
-
             response.EnsureSuccessStatusCode();
         }
 

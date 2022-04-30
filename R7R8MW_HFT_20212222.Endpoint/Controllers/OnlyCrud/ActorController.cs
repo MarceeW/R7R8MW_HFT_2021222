@@ -49,7 +49,7 @@ namespace R7R8MW_HFT_20212222.Endpoint.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            personLogic.Delete(id,true);
+            personLogic.Delete(id, true);
         }
     }
 }

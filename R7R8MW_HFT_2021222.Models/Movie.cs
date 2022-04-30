@@ -29,10 +29,8 @@ namespace R7R8MW_HFT_2021222.Models
         public int DirectorId { get; set; }
 
         public virtual Director Director { get; set; }
-
         [JsonIgnore]
         public virtual ICollection<Actor> Actors { get; set; }
-
         public virtual ICollection<Role> Roles { get; set; }
 
         public Movie()
@@ -51,8 +49,12 @@ namespace R7R8MW_HFT_2021222.Models
         }
         public override bool Equals(object obj)
         {
-            Movie other = obj as Movie;
-            return Id==other.Id && Title==other.Title;
+            if(obj is Movie)
+            {
+                Movie other = obj as Movie;
+                return Id == other.Id && Title == other.Title;
+            }
+            return false;
         }
         public override int GetHashCode()
         {

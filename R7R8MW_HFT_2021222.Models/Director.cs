@@ -11,13 +11,13 @@ namespace R7R8MW_HFT_2021222.Models
 {
     public class Director : IPerson
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
-        [Required]
-        [StringLength(240)]
-        public string Name { get; set; }
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public int Id { get; set; }
+        //
+        //[Required]
+        //[StringLength(240)]
+        //public string Name { get; set; }
         [JsonIgnore]
         public virtual ICollection<Movie> Movies { get; set; }
 
@@ -34,8 +34,12 @@ namespace R7R8MW_HFT_2021222.Models
         }
         public override bool Equals(object obj)
         {
-            Director other = obj as Director;
-            return Id == other.Id && Name == other.Name;
+            if (obj is Actor)
+            {
+                Director other = obj as Director;
+                return Id == other.Id && Name == other.Name;
+            }
+            return false;
         }
         public override int GetHashCode()
         {

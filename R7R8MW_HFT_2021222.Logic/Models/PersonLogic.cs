@@ -36,9 +36,27 @@ namespace R7R8MW_HFT_2021222.Logic
                 throw new KeyNotFoundException();
 
             if (isActor)
-                actorRep.Delete(id);
+            {
+                try
+                {
+                    actorRep.Delete(id);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
             else
-                directorRep.Delete(id);
+            {
+                try
+                {
+                    directorRep.Delete(id);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
         }
 
         public IPerson Read(int id, bool isActor)
@@ -47,9 +65,19 @@ namespace R7R8MW_HFT_2021222.Logic
                 throw new KeyNotFoundException();
 
             if (isActor)
-                return actorRep.Read(id);
+            {
+                Actor actor = actorRep.Read(id);
+                if (actor == null)
+                    throw new NullReferenceException("This actor's ID was recently removed from repository!");
+                return actor;
+            }
             else
-                return directorRep.Read(id);
+            {
+                Director director = directorRep.Read(id);
+                if (director == null)
+                    throw new NullReferenceException("This director's ID was recently removed from repository!");
+                return director;
+            }
         }
 
         public IQueryable<IPerson> ReadAll(bool readActors)
@@ -70,21 +98,25 @@ namespace R7R8MW_HFT_2021222.Logic
             else if (entity is Director)
                 directorRep.Update(entity as Director);
         }
-        public Director MostSuccesfulDirector(IMovieLogic logic)
+        public IEnumerable<Director> MostSuccesfulDirector(IMovieLogic logic)
         {
-            return logic.TopRating().Director;
+            return logic.TopRating().Select(x => x.Director);
         }
-        public Director DirectorWithMostFilms()
+        public IEnumerable<Director> DirectorWithMostFilms()
         {
-            return (from x in directorRep.ReadAll()
-                    orderby x.Movies.Count() descending
-                    select x).FirstOrDefault();
+            int films = (from x in directorRep.ReadAll()
+                         orderby x.Movies.Count descending
+                         select x.Movies.Count).FirstOrDefault();
+
+            return directorRep.ReadAll().Where(x => x.Movies.Count == films);
         }
-        public Actor MostCommonActor()
+        public IEnumerable<Actor> MostCommonActor()
         {
-            return (from x in actorRep.ReadAll()
-                    orderby x.Movies.Count() descending
-                    select x).FirstOrDefault();
+            int count = (from x in actorRep.ReadAll()
+                         orderby x.Movies.Count() descending
+                         select x.Movies.Count()).FirstOrDefault();
+
+            return actorRep.ReadAll().Where(x => x.Movies.Count == count);
         }
         public IEnumerable<Actor> AllActorsFromAvengers()
         {

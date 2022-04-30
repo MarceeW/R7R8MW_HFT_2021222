@@ -36,7 +36,10 @@ namespace R7R8MW_HFT_2021222.Logic
             if (id < 0)
                 throw new KeyNotFoundException();
 
-            return roleRepository.Read(id);
+            Role role = roleRepository.Read(id);
+            if (role == null)
+                throw new NullReferenceException("This role's ID was recently removed from repository!");
+            return role;
         }
 
         public IQueryable<Role> ReadAll()
@@ -51,12 +54,17 @@ namespace R7R8MW_HFT_2021222.Logic
 
             roleRepository.Update(entity);
         }
-        public string GetMostCommonRoleName()
+        public IEnumerable<string> GetMostCommonRoleName()
         {
-            return (from x in roleRepository.ReadAll()
-                    group x by x.RoleName into roles
-                    orderby roles.Count() descending
-                    select roles.Key).FirstOrDefault();
+            int count = (from x in roleRepository.ReadAll()
+                        group x by x.RoleName into roles
+                        orderby roles.Count() descending
+                        select roles.Count()).First();
+
+            return from x in roleRepository.ReadAll()
+                   group x by x.RoleName into roles
+                   where roles.Count() == count
+                   select roles.Key;
         }
     }
 }

@@ -27,10 +27,10 @@ namespace R7R8MW_HFT_2021222.Logic
 
         public void Delete(int id)
         {
-            if (id < 0)
+            if (id < 0 || id > repository.ReadAll().Count())
                 throw new KeyNotFoundException();
-
-            repository.Delete(id);
+            else 
+                repository.Delete(id);
         }
 
         public Movie Read(int id)
@@ -38,7 +38,10 @@ namespace R7R8MW_HFT_2021222.Logic
             if (id < 0)
                 throw new KeyNotFoundException();
 
-            return repository.Read(id);
+            Movie movie = repository.Read(id);
+            if (movie == null)
+                throw new NullReferenceException("This movie's ID was recently removed from repository!");
+            return movie;
         }
 
         public IQueryable<Movie> ReadAll()
@@ -53,23 +56,31 @@ namespace R7R8MW_HFT_2021222.Logic
 
             repository.Update(entity);
         }
-        public Movie LargestIncome()
+        public IEnumerable<Movie> LargestIncome()
         {
-            return (from x in repository.ReadAll()
-                    orderby x.Income descending
-                    select x).FirstOrDefault();
+            double largestIncome = (from x in repository.ReadAll()
+                                    orderby x.Income descending
+                                    select x.Income).First();
+
+            return from x in repository.ReadAll()
+                   where x.Income == largestIncome
+                   select x;
         }
-        public Movie Oldest()
+        public IEnumerable<Movie> Oldest()
         {
-            return (from x in repository.ReadAll()
-                    orderby x.Release
-                    select x).FirstOrDefault();
+            DateTime oldestDate = (from x in repository.ReadAll()
+                                   orderby x.Release
+                                   select x.Release).FirstOrDefault();
+
+            return repository.ReadAll().Where(x => x.Release.Equals(oldestDate));
         }
-        public Movie TopRating()
+        public IEnumerable<Movie> TopRating()
         {
-            return (from x in repository.ReadAll()
-                    orderby x.Rating descending
-                    select x).FirstOrDefault();
+            double topRating = (from x in repository.ReadAll()
+                                orderby x.Rating descending
+                                select x.Rating).FirstOrDefault();
+
+            return repository.ReadAll().Where(x=>x.Rating == topRating);
         }
     }
 }
