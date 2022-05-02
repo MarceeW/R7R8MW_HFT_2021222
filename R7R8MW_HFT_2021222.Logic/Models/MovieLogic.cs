@@ -82,5 +82,13 @@ namespace R7R8MW_HFT_2021222.Logic
 
             return repository.ReadAll().Where(x=>x.Rating == topRating);
         }
+        public IEnumerable<KeyValuePair<int, IEnumerable<Movie>>> MoviesPerYear()
+        {
+            return from x in repository.ReadAll()
+                   group x by x.Release.Year into years
+                   select new KeyValuePair<int, IEnumerable<Movie>>
+                   (years.Key, repository.ReadAll()
+                   .Where(x => x.Release.Year == years.Key).AsEnumerable());
+        }
     }
 }

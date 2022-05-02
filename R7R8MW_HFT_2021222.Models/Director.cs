@@ -34,7 +34,7 @@ namespace R7R8MW_HFT_2021222.Models
         }
         public override bool Equals(object obj)
         {
-            if (obj is Actor)
+            if (obj is Director)
             {
                 Director other = obj as Director;
                 return Id == other.Id && Name == other.Name;

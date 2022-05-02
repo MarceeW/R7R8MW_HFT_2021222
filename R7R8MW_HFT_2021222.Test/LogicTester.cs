@@ -31,9 +31,11 @@ namespace R7R8MW_HFT_2021222.Test
                 new Movie("2#TestMovie 2#264,8#2#2008*06*13#6,6"),
                 new Movie("3#TestMovie 3#623,9#1#2010*05*07#6,9"),
                 new Movie("4#TestMovie 4#449,3#3#2011*05*06#7"),
-            }.AsQueryable();
+            };
             fakeMovieRepository = new Mock<IRepository<Movie>>();
-            fakeMovieRepository.Setup(m=>m.ReadAll()).Returns(movies);
+            fakeMovieRepository.Setup(m=>m.ReadAll()).Returns(movies.AsQueryable());
+            fakeMovieRepository.Setup(m => m.Create(It.IsAny<Movie>())).Callback((Movie movie) => movies.Add(movie)).Verifiable();
+            fakeMovieRepository.Setup(m=>m.Read(It.IsAny<int>())).Returns((int i)=>movies.ElementAt(i-1));
             movieLogic = new MovieLogic(fakeMovieRepository.Object);
 
             var directors = new List<Director>()
@@ -41,19 +43,23 @@ namespace R7R8MW_HFT_2021222.Test
                 new Director("1#Test One"),
                 new Director("2#Test Two"),
                 new Director("3#Test Three"),
-            }.AsQueryable();
+            };
             fakeDirectorRepository = new Mock<IRepository<Director>>();
-            fakeDirectorRepository.Setup(d => d.ReadAll()).Returns(directors);
-            
+            fakeDirectorRepository.Setup(d => d.ReadAll()).Returns(directors.AsQueryable());
+            fakeDirectorRepository.Setup(d => d.Create(It.IsAny<Director>())).Callback((Director dir) => directors.Add(dir)).Verifiable();
+            fakeDirectorRepository.Setup(d => d.Read(It.IsAny<int>())).Returns((int i) => directors.ElementAt(i - 1));
+
 
             var actors = new List<Actor>()
             {
                 new Actor("1#Testactor One"),
                 new Actor("2#Testactor Two"),
                 new Actor("3#Testactor Three")
-            }.AsQueryable();
+            };
             fakeActorRepository = new Mock<IRepository<Actor>>();
-            fakeActorRepository.Setup(a => a.ReadAll()).Returns(actors);
+            fakeActorRepository.Setup(a => a.ReadAll()).Returns(actors.AsQueryable());
+            fakeActorRepository.Setup(a => a.Create(It.IsAny<Actor>())).Callback((Actor actor) => actors.Add(actor)).Verifiable();
+            fakeActorRepository.Setup(a => a.Read(It.IsAny<int>())).Returns((int i) => actors.ElementAt(i - 1));
             personLogic = new PersonLogic(fakeActorRepository.Object, fakeDirectorRepository.Object);
 
             var roles = new List<Role>()
@@ -64,39 +70,74 @@ namespace R7R8MW_HFT_2021222.Test
                 new Role("4#2#2#4#IronMan"),
                 new Role("5#3#1#5#RoleFive"),
                 new Role("6#4#3#6#RoleSix"),
-            }.AsQueryable();
+            };
             fakeRoleRepository = new Mock<IRepository<Role>>();
-            fakeRoleRepository.Setup(r => r.ReadAll()).Returns(roles);
+            fakeRoleRepository.Setup(r => r.ReadAll()).Returns(roles.AsQueryable());
+            fakeRoleRepository.Setup(r => r.Create(It.IsAny<Role>())).Callback((Role role) => roles.Add(role)).Verifiable();
+            fakeRoleRepository.Setup(r => r.Read(It.IsAny<int>())).Returns((int i) => roles.ElementAt(i - 1));
             roleLogic = new RoleLogic(fakeRoleRepository.Object);
 
         }
         [Test]
-        public void ActorCreationTestWithNullValueTest()
+        public void ActorCreationTestWithNullValue()
         {
             Actor testPerson = null;
 
             Assert.That(()=>personLogic.Create(testPerson),Throws.TypeOf<ArgumentNullException>());
         }
         [Test]
-        public void DirectorCreationTestWithNullValueTest()
+        public void ActorCreationTest()
+        {
+            Actor actor = new Actor("4#TestActor Four");
+            personLogic.Create(actor);
+
+            Assert.AreEqual(personLogic.Read(4,true), actor);
+        }
+        [Test]
+        public void DirectorCreationTest()
+        {
+            Director director = new Director("4#Test Four");
+            personLogic.Create(director);
+
+            Assert.AreEqual(personLogic.Read(4, false), director);
+        }
+        [Test]
+        public void DirectorCreationTestWithNullValue()
         {
             Director testPerson = null;
 
             Assert.That(() => personLogic.Create(testPerson), Throws.TypeOf<ArgumentNullException>());
         }
         [Test]
-        public void RoleCreationTestWithNullValueTest()
+        public void RoleCreationTestWithNullValue()
         {
             Role testRole = null;
 
             Assert.That(() => roleLogic.Create(testRole), Throws.TypeOf<ArgumentNullException>());
         }
         [Test]
-        public void MovieCreationTestWithNullValueTest()
+        public void RoleCreationTest()
+        {
+            Role testRole = new Role("7#2#2#2#IronGirl");
+
+            roleLogic.Create(testRole);
+
+            Assert.AreEqual(roleLogic.Read(7), testRole);
+        }
+        [Test]
+        public void MovieCreationTestWithNullValue()
         {
             Movie testMovie = null;
 
             Assert.That(() => movieLogic.Create(testMovie), Throws.TypeOf<ArgumentNullException>());
+        }
+        [Test]
+        public void MovieCreationTest()
+        {
+            Movie testMovie = new Movie("5#TestMovie 5#449,3#3#2011*05*06#7");
+            movieLogic.Create(testMovie);
+            var asd = movieLogic.ReadAll();
+            Assert.AreEqual(movieLogic.Read(5), testMovie);
         }
         [Test]
         public void OldestMovieTest()
@@ -119,6 +160,41 @@ namespace R7R8MW_HFT_2021222.Test
             };
             var result= movieLogic.TopRating();
 
+            Assert.AreEqual(expected, result);
+        }
+        [Test]
+        public void MoviesPerYearTest()
+        {
+            var expected = new List<KeyValuePair<int, List<Movie>>>()
+            {
+                new KeyValuePair<int, List<Movie>>(2008,
+                new List<Movie>(){
+                    new Movie("1#TestMovie 1#585,8#1#2008*05*02#7,9"),
+                    new Movie("2#TestMovie 2#264,8#2#2008*06*13#6,6")}),
+                new KeyValuePair<int, List<Movie>>(2010,
+                new List<Movie>(){
+                    new Movie("3#TestMovie 3#623,9#1#2010*05*07#6,9")}),
+                new KeyValuePair<int, List<Movie>>(2011,
+                new List<Movie>(){
+                    new Movie("4#TestMovie 4#449,3#3#2011*05*06#7")})
+            };
+            var result=movieLogic.MoviesPerYear();
+            Assert.AreEqual(expected, result);
+        }
+        [Test]
+        public void PersonNameStartingLetterTest()
+        {
+            var expected = new List<IPerson>()
+            {
+                new Actor("1#Testactor One"),
+                new Actor("2#Testactor Two"),
+                new Actor("3#Testactor Three"),
+                new Director("1#Test One"),
+                new Director("2#Test Two"),
+                new Director("3#Test Three")
+            };
+
+            var result = personLogic.GetAllPersonWithStarting('t');
             Assert.AreEqual(expected, result);
         }
         [Test]

@@ -355,6 +355,18 @@ namespace R7R8MW_HFT_2021222.Client
 
             Console.ReadLine();
         }
+        static void ListMoviesPerYear()
+        {
+            var result = restService.Get<KeyValuePair<int, IEnumerable<Movie>>>("movienoncruds/MoviesPerYear");
+            foreach (var item in result)
+            {
+                Console.WriteLine("Year: " + item.Key);
+                foreach(var movie in item.Value)
+                    Console.WriteLine("Title: " + movie.Title);
+            }
+
+            Console.ReadLine();
+        }
         #endregion
         #region PersonNonCruds
         static void ListAllActorsFromAvengers()
@@ -383,6 +395,30 @@ namespace R7R8MW_HFT_2021222.Client
             }
             Console.ReadLine();
         }
+        static void ListGetAllPersonWithStarting()
+        {
+            Console.WriteLine("Type a letter: ");
+            bool accepted = false;
+            char letter=(char)0;
+            while (!accepted)
+            {
+                try
+                {
+                    letter = Console.ReadLine()[0];
+                    if(letter!=0 || letter!=' ')
+                        accepted = true;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Try again!");
+                }
+            }
+            var result = restService.Get<IPerson>("PersonNonCruds/GetAllPersonWithStarting/"+letter);
+            foreach(var person in result)
+                Console.WriteLine(person.Name);
+
+            Console.ReadLine();
+        }
         #endregion
         #region RoleNonCruds
         static void ListMostCommonRoleNames()
@@ -407,6 +443,7 @@ namespace R7R8MW_HFT_2021222.Client
                 .Add("Update", () => Update("Actor"))
                 .Add("List most common actors",()=> ListMostCommonActors())
                 .Add("List all actors from Avengers",()=> ListAllActorsFromAvengers())
+                .Add("List All Person Starting With: ", () => ListGetAllPersonWithStarting())
                 .Add("Exit", ConsoleMenu.Close);
 
             var roleSubMenu = new ConsoleMenu(args, level: 1)
@@ -423,6 +460,7 @@ namespace R7R8MW_HFT_2021222.Client
                 .Add("Delete", () => Delete("Director"))
                 .Add("Update", () => Update("Director"))
                 .Add("List directors with most films",()=> ListDirectorWithMostFilms())
+                .Add("List All Person Starting With: ",()=> ListGetAllPersonWithStarting())
                 .Add("Exit", ConsoleMenu.Close);
 
             var movieSubMenu = new ConsoleMenu(args, level: 1)
@@ -433,6 +471,7 @@ namespace R7R8MW_HFT_2021222.Client
                 .Add("List oldest movies", () => ListOldestMovies())
                 .Add("List top rated movies",() => ListTopRatedMovies())
                 .Add("List movies with largest income", () => ListMoviesWithLargestIncome())
+                .Add("List movies per year",()=> ListMoviesPerYear())
                 .Add("Exit", ConsoleMenu.Close);
 
             var menu = new ConsoleMenu(args, level: 0)

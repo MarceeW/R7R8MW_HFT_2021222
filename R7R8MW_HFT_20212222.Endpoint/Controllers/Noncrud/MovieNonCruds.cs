@@ -30,5 +30,10 @@ namespace R7R8MW_HFT_2021222.Endpoint.Controllers
         {
             return logic.LargestIncome();
         }
+        [HttpGet]
+        public IEnumerable<KeyValuePair<int, IEnumerable<Movie>>> MoviesPerYear()
+        {
+            return logic.MoviesPerYear();
+        }
     }
 }

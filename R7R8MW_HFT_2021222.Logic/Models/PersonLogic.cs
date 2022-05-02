@@ -124,5 +124,17 @@ namespace R7R8MW_HFT_2021222.Logic
                    where x.Movies.Any(x => x.Title.ToLower().Contains("avengers"))
                    select x;
         }
+        public IEnumerable<IPerson> GetAllPersonWithStarting(char startingWith)
+        {
+            var actors = (from x in actorRep.ReadAll()
+                         where char.ToLower(x.Name[0]) == char.ToLower(startingWith)
+                         select x as IPerson);
+
+            var directors = (from x in directorRep.ReadAll()
+                            where char.ToLower(x.Name[0]) == char.ToLower(startingWith)
+                            select x as IPerson);
+
+            return actors.Concat(directors);
+        }
     }
 }

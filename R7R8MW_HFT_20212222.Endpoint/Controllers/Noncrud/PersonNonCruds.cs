@@ -31,5 +31,10 @@ namespace R7R8MW_HFT_2021222.Endpoint.Controllers.Noncrud
         {
             return logic.MostCommonActor();
         }
+        [HttpGet("{letter}")]
+        public IEnumerable<IPerson> GetAllPersonWithStarting(char letter)
+        {
+            return logic.GetAllPersonWithStarting(letter);
+        }
     }
 }
