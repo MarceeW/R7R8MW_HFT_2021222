@@ -98,9 +98,13 @@ namespace R7R8MW_HFT_2021222.Logic
             else if (entity is Director)
                 directorRep.Update(entity as Director);
         }
-        public IEnumerable<Director> MostSuccesfulDirector(IMovieLogic logic)
+        public IEnumerable<Director> MostSuccesfulDirector()
         {
-            return logic.TopRating().Select(x => x.Director);
+            var movies = directorRep.ReadAll().SelectMany(x => x.Movies);
+
+            double maxRating = movies.Max(x => x.Rating);
+
+            return movies.Where(x => x.Rating == maxRating).Select(x => x.Director);
         }
         public IEnumerable<Director> DirectorWithMostFilms()
         {

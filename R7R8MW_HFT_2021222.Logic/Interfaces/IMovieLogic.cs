@@ -14,6 +14,7 @@ namespace R7R8MW_HFT_2021222.Logic
         IQueryable<Movie> ReadAll();
         IEnumerable<Movie> TopRating();
         IEnumerable<KeyValuePair<int, IEnumerable<Movie>>> MoviesPerYear();
+        IEnumerable<Movie> MovieWithMostActors();
         void Update(Movie entity);
     }
 }

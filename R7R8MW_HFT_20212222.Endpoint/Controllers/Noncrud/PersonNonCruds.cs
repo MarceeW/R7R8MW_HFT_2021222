@@ -36,5 +36,10 @@ namespace R7R8MW_HFT_2021222.Endpoint.Controllers.Noncrud
         {
             return logic.GetAllPersonWithStarting(letter);
         }
+        [HttpGet]
+        public IEnumerable<Director> GetMostSuccesfulDirector()
+        {
+            return logic.MostSuccesfulDirector();
+        }
     }
 }

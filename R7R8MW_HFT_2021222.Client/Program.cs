@@ -2,6 +2,7 @@
 using R7R8MW_HFT_2021222.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace R7R8MW_HFT_2021222.Client
 {
@@ -367,6 +368,16 @@ namespace R7R8MW_HFT_2021222.Client
 
             Console.ReadLine();
         }
+        static void ListMoviesWithMostActors()
+        {
+            var result = restService.Get<Movie>("MovieNonCruds/MoviesWithMostActors");
+            foreach (var item in result)
+            {
+                Console.WriteLine(item.Title);
+            }
+
+            Console.ReadLine();
+        }
         #endregion
         #region PersonNonCruds
         static void ListAllActorsFromAvengers()
@@ -419,6 +430,14 @@ namespace R7R8MW_HFT_2021222.Client
 
             Console.ReadLine();
         }
+        static void ListMostSuccesfulDirector()
+        {
+            var result = restService.Get<IPerson>("PersonNonCruds/GetMostSuccesfulDirector");
+            foreach(var director in result)
+                Console.WriteLine(director.Name);
+
+            Console.ReadLine();
+        }
         #endregion
         #region RoleNonCruds
         static void ListMostCommonRoleNames()
@@ -461,6 +480,7 @@ namespace R7R8MW_HFT_2021222.Client
                 .Add("Update", () => Update("Director"))
                 .Add("List directors with most films",()=> ListDirectorWithMostFilms())
                 .Add("List All Person Starting With: ",()=> ListGetAllPersonWithStarting())
+                .Add("List Most Succesful Directors",()=> ListMostSuccesfulDirector())
                 .Add("Exit", ConsoleMenu.Close);
 
             var movieSubMenu = new ConsoleMenu(args, level: 1)
@@ -472,6 +492,7 @@ namespace R7R8MW_HFT_2021222.Client
                 .Add("List top rated movies",() => ListTopRatedMovies())
                 .Add("List movies with largest income", () => ListMoviesWithLargestIncome())
                 .Add("List movies per year",()=> ListMoviesPerYear())
+                .Add("List Movies With Most Actors",()=> ListMoviesWithMostActors())
                 .Add("Exit", ConsoleMenu.Close);
 
             var menu = new ConsoleMenu(args, level: 0)

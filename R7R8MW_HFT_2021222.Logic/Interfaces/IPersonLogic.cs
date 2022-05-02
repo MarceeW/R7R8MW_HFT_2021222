@@ -12,7 +12,7 @@ namespace R7R8MW_HFT_2021222.Logic
         IEnumerable<Director> DirectorWithMostFilms();
         IEnumerable<Actor> MostCommonActor();
         IEnumerable<IPerson> GetAllPersonWithStarting(char startingWith);
-        IEnumerable<Director> MostSuccesfulDirector(IMovieLogic logic);
+        IEnumerable<Director> MostSuccesfulDirector();
         IPerson Read(int id, bool isActor);
         IQueryable<IPerson> ReadAll(bool readActors);
         void Update(IPerson entity);
