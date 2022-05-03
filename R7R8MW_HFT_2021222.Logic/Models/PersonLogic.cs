@@ -140,5 +140,14 @@ namespace R7R8MW_HFT_2021222.Logic
 
             return actors.Concat(directors);
         }
+        public IEnumerable<KeyValuePair<string,IEnumerable<KeyValuePair<string,string>>>> ActorInfo()
+        {
+            return from x in actorRep.ReadAll()
+                   select new KeyValuePair<string, IEnumerable<KeyValuePair<string, string>>>(x.Name,
+                   from y in x.Movies
+                   select new KeyValuePair<string, string>(y.Title,
+                   x.Roles.First(r => r.MovieId == y.Id).RoleName));
+        }
+
     }
 }

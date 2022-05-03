@@ -438,6 +438,21 @@ namespace R7R8MW_HFT_2021222.Client
 
             Console.ReadLine();
         }
+        static void ListActorsWithTheirMovieRoles()
+        {
+            var result = restService.Get<KeyValuePair<string, IEnumerable<KeyValuePair<string, string>>>>("PersonNonCruds/ActorInfo");
+            foreach (var item in result)
+            {
+                Console.WriteLine("Actor name: "+item.Key);
+                Console.WriteLine("--------------Films----------------");
+                foreach (var film in item.Value)
+                {
+                    Console.WriteLine(film.Key+" Role: "+film.Value);
+                }
+                Console.WriteLine("***********************************");
+            }
+            Console.ReadLine();
+        }
         #endregion
         #region RoleNonCruds
         static void ListMostCommonRoleNames()
@@ -454,7 +469,7 @@ namespace R7R8MW_HFT_2021222.Client
         static void Main(string[] args)
         {
             restService = new RestService("http://localhost:60038/");
-
+            #region Menu
             var actorSubMenu = new ConsoleMenu(args, level: 1)
                 .Add("List", () => List("Actor"))
                 .Add("Create", () => Create("Actor"))
@@ -463,6 +478,7 @@ namespace R7R8MW_HFT_2021222.Client
                 .Add("List most common actors",()=> ListMostCommonActors())
                 .Add("List all actors from Avengers",()=> ListAllActorsFromAvengers())
                 .Add("List All Person Starting With: ", () => ListGetAllPersonWithStarting())
+                .Add("List Actors With Their Movie Roles",()=> ListActorsWithTheirMovieRoles())
                 .Add("Exit", ConsoleMenu.Close);
 
             var roleSubMenu = new ConsoleMenu(args, level: 1)
@@ -503,7 +519,7 @@ namespace R7R8MW_HFT_2021222.Client
                 .Add("Exit", ConsoleMenu.Close);
 
             menu.Show();
-
+            #endregion
         }
     }
 }

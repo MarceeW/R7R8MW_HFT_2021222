@@ -41,5 +41,10 @@ namespace R7R8MW_HFT_2021222.Endpoint.Controllers.Noncrud
         {
             return logic.MostSuccesfulDirector();
         }
+        [HttpGet]
+        public IEnumerable<KeyValuePair<string, IEnumerable<KeyValuePair<string, string>>>> ActorInfo()
+        {
+            return logic.ActorInfo();
+        }
     }
 }

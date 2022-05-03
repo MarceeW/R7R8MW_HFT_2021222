@@ -24,7 +24,7 @@ namespace R7R8MW_HFT_2021222.Repository
             if (!dbContextOptionsBuilder.IsConfigured)
             {
                 dbContextOptionsBuilder
-                    .UseInMemoryDatabase("steamDb")
+                    .UseInMemoryDatabase("myMovieDb")
                     .UseLazyLoadingProxies();
             }
         }
