@@ -86,6 +86,13 @@ namespace R7R8MW_HFT_2021222.Test
             Assert.That(()=>personLogic.Create(testPerson),Throws.TypeOf<ArgumentNullException>());
         }
         [Test]
+        public void ActorCreationTestWithNegativeId()
+        {
+            IPerson testPerson = new Actor(){ Id = -1 };
+
+            Assert.That(() => personLogic.Create(testPerson), Throws.TypeOf<ArgumentNullException>());
+        }
+        [Test]
         public void ActorCreationTest()
         {
             Actor actor = new Actor("4#TestActor Four");
@@ -102,6 +109,13 @@ namespace R7R8MW_HFT_2021222.Test
             Assert.AreEqual(personLogic.Read(4, false), director);
         }
         [Test]
+        public void DirectorCreationTestWithNegativeId()
+        {
+            IPerson testPerson = new Director() { Id = -1 };
+
+            Assert.That(() => personLogic.Create(testPerson), Throws.TypeOf<ArgumentNullException>());
+        }
+        [Test]
         public void DirectorCreationTestWithNullValue()
         {
             Director testPerson = null;
@@ -112,6 +126,13 @@ namespace R7R8MW_HFT_2021222.Test
         public void RoleCreationTestWithNullValue()
         {
             Role testRole = null;
+
+            Assert.That(() => roleLogic.Create(testRole), Throws.TypeOf<ArgumentNullException>());
+        }
+        [Test]
+        public void RoleCreationTestWithNegativeId()
+        {
+            Role testRole = new Role() { RoleId = -1 };
 
             Assert.That(() => roleLogic.Create(testRole), Throws.TypeOf<ArgumentNullException>());
         }
@@ -128,6 +149,13 @@ namespace R7R8MW_HFT_2021222.Test
         public void MovieCreationTestWithNullValue()
         {
             Movie testMovie = null;
+
+            Assert.That(() => movieLogic.Create(testMovie), Throws.TypeOf<ArgumentNullException>());
+        }
+        [Test]
+        public void MovieCreationTestWithNegativeId()
+        {
+            Movie testMovie = new Movie() { Id = -1 };
 
             Assert.That(() => movieLogic.Create(testMovie), Throws.TypeOf<ArgumentNullException>());
         }

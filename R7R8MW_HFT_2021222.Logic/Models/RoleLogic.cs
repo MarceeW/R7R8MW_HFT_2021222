@@ -17,7 +17,7 @@ namespace R7R8MW_HFT_2021222.Logic
         }
         public void Create(Role entity)
         {
-            if (entity == null)
+            if (entity == null || entity.RoleId < 0)
                 throw new ArgumentNullException();
 
             roleRepository.Create(entity);
