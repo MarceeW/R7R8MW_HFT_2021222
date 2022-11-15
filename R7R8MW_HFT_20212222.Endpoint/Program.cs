@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace R7R8MW_HFT_20212222.Endpoint
+namespace R7R8MW_HFT_2021222.Endpoint
 {
     public class Program
     {

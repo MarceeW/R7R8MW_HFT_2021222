@@ -3,7 +3,7 @@ using R7R8MW_HFT_2021222.Logic;
 using R7R8MW_HFT_2021222.Models;
 using System.Collections.Generic;
 
-namespace R7R8MW_HFT_20212222.Endpoint.Controllers
+namespace R7R8MW_HFT_2021222.Endpoint.Controllers
 {
     [Route("[controller]")]
     [ApiController]

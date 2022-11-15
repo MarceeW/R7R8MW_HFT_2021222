@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using R7R8MW_HFT_2021222.Endpoint.Services;
 using R7R8MW_HFT_2021222.Logic;
 using R7R8MW_HFT_2021222.Models;
 using R7R8MW_HFT_2021222.Repository;
@@ -14,7 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace R7R8MW_HFT_20212222.Endpoint
+namespace R7R8MW_HFT_2021222.Endpoint
 {
     public class Startup
     {
@@ -39,6 +42,8 @@ namespace R7R8MW_HFT_20212222.Endpoint
             services.AddTransient<IRoleLogic, RoleLogic>();
             services.AddTransient<IPersonLogic, PersonLogic>();
 
+            services.AddSignalR();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -53,8 +58,17 @@ namespace R7R8MW_HFT_20212222.Endpoint
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "R7R8MW_HFT_20212222.Endpoint v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "R7R8MW_HFT_2021222.Endpoint v1"));
             }
+
+            app.UseExceptionHandler(c => c.Run(async context =>
+            {
+                var exception = context.Features
+                    .Get<IExceptionHandlerPathFeature>()
+                    .Error;
+                var response = new { Msg = exception.Message };
+                await context.Response.WriteAsJsonAsync(response);
+            }));
 
             app.UseRouting();
 
@@ -63,6 +77,7 @@ namespace R7R8MW_HFT_20212222.Endpoint
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<SignalRHub>("/hub");
             });
         }
     }
