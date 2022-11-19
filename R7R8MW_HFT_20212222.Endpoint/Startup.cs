@@ -70,6 +70,12 @@ namespace R7R8MW_HFT_2021222.Endpoint
                 await context.Response.WriteAsJsonAsync(response);
             }));
 
+            app.UseCors(x => x
+                .AllowCredentials()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .WithOrigins("http://localhost:25651"));
+
             app.UseRouting();
 
             app.UseAuthorization();
