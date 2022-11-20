@@ -13,7 +13,7 @@ using System.Windows.Input;
 
 namespace R7R8MW_HFT_2021222.WpfClient
 {
-    public class MainWindowViewModel : ObservableRecipient
+    public class ActorWindowViewModel : ObservableRecipient
     {
         private Actor selected;
 
@@ -31,9 +31,17 @@ namespace R7R8MW_HFT_2021222.WpfClient
                         Id = value.Id
                     };
                     OnPropertyChanged();
+
+                    isSelectedValid = true;
                     (DeleteActorCommand as RelayCommand).NotifyCanExecuteChanged();
                     (UpdateActorCommand as RelayCommand).NotifyCanExecuteChanged();
-                }    
+                }
+                else
+                {
+                    isSelectedValid = false;
+                    (DeleteActorCommand as RelayCommand).NotifyCanExecuteChanged();
+                    (UpdateActorCommand as RelayCommand).NotifyCanExecuteChanged();
+                }
             }
         }
         public ICommand CreateActorCommand { get; }
@@ -48,8 +56,10 @@ namespace R7R8MW_HFT_2021222.WpfClient
                 return (bool)DependencyPropertyDescriptor.FromProperty(prop, typeof(FrameworkElement)).Metadata.DefaultValue;
             }
         }
-        public MainWindowViewModel()
+        private bool isSelectedValid;
+        public ActorWindowViewModel()
         {
+
             if (!IsInDesignMode)
             {
                 Actors = new RestCollection<Actor>("http://localhost:60038/", "actor", "hub");
@@ -62,15 +72,16 @@ namespace R7R8MW_HFT_2021222.WpfClient
                 {
                     Actors.Delete(Selected.Id);
                 },
-                    () => Selected != null);
+                    () => isSelectedValid);
 
                 UpdateActorCommand = new RelayCommand(() =>
                 {
                     Actors.Update(Selected);
                 },
-                    () => Selected != null);
+                    () => isSelectedValid);
 
                 Selected = new Actor();
+                isSelectedValid = false;
                 BindingOperations.EnableCollectionSynchronization(Actors, Selected);
             }
         }

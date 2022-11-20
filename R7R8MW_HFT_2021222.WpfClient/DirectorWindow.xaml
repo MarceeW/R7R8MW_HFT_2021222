@@ -1,0 +1,34 @@
+﻿<Window x:Class="R7R8MW_HFT_2021222.WpfClient.DirectorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:R7R8MW_HFT_2021222.WpfClient"
+        mc:Ignorable="d"
+        Title="Director Editor" Height="450" Width="800">
+    <Window.DataContext>
+        <local:DirectorWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox ItemsSource="{Binding Directors}" SelectedItem="{Binding Selected}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Column="1">
+            <StackPanel Margin="5">
+                <Label Content="Name" Background="LightBlue"/>
+                <TextBox Text="{Binding Selected.Name}"/>
+            </StackPanel>
+            <Button Command="{Binding CreateDirectorCommand}" Content="Create Director" Margin = "5"/>
+            <Button Command="{Binding DeleteDirectorCommand}" Content="Delete Director" Margin = "5"/>
+            <Button Command="{Binding UpdateDirectorCommand}" Content="Update Director" Margin = "5"/>
+        </StackPanel>
+    </Grid>
+</Window>

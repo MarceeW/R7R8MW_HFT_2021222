@@ -1,34 +1,34 @@
-﻿<Window x:Class="R7R8MW_HFT_2021222.WpfClient.MainWindow"
+﻿<Window x:Class="R7R8MW_HFT_2021222.WpfClient.MovieWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:R7R8MW_HFT_2021222.WpfClient"
         mc:Ignorable="d"
-        Title="Actor Editor" Height="450" Width="800">
+        Title="Movie Editor" Height="450" Width="800">
     <Window.DataContext>
-        <local:MainWindowViewModel/>
+        <local:MovieWindowViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <ListBox ItemsSource="{Binding Actors}" SelectedItem="{Binding Selected}">
+        <ListBox ItemsSource="{Binding Movies}" SelectedItem="{Binding Selected}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Label Content="{Binding Name}"/>
+                    <Label Content="{Binding Title}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <StackPanel Grid.Column="1">
             <StackPanel Margin="5">
-                <Label Content="Name" Background="LightBlue"/>
-                <TextBox Text="{Binding Selected.Name}"/>
+                <Label Content="Title" Background="LightBlue"/>
+                <TextBox Text="{Binding Selected.Title}"/>
             </StackPanel>
-            <Button Command="{Binding CreateActorCommand}" Content="Create Actor" Margin = "5"/>
-            <Button Command="{Binding DeleteActorCommand}" Content="Delete Actor" Margin = "5"/>
-            <Button Command="{Binding UpdateActorCommand}" Content="Update Actor" Margin = "5"/>
+            <Button Command="{Binding CreateMovieCommand}" Content="Create Movie" Margin = "5"/>
+            <Button Command="{Binding DeleteMovieCommand}" Content="Delete Movie" Margin = "5"/>
+            <Button Command="{Binding UpdateMovieCommand}" Content="Update Movie" Margin = "5"/>
         </StackPanel>
     </Grid>
 </Window>

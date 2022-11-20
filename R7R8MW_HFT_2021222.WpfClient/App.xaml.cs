@@ -13,5 +13,10 @@ namespace R7R8MW_HFT_2021222.WpfClient
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            new DirectorWindow().Show();
+            new MovieWindow().Show();
+        }
     }
 }
